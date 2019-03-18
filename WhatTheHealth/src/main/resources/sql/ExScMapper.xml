@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper
+		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="ExScMapper">
+ 	
+ 	
+	<resultMap type="com.wthealth.domain.ExSchedule" id="exScSelectMap">
+
+		<result jdbcType="VARCHAR" column="ex_sc_no" property="exScNo"/>
+		<result jdbcType="VARCHAR" column="user_id" property="userId"/>
+		<result jdbcType="VARCHAR" column="ex_sc_title" property="exScName"/>
+		<result jdbcType="NUMERIC" column="ex_sc_calorie" property="exScCalorie"/>
+		<result jdbcType="DATE" column="ex_sc_time" property="exScTime"/>
+		<result jdbcType="VARCHAR" column="ex_sc_contents" property="exScContents"/>
+		<result jdbcType="DATE" column="ex_sc_date" property="exScDate"/>
+		<result jdbcType="NUMERIC" column="post_no" property="postNo"/>
+
+<result jdbcType="VARCHAR" column="ex_sc_photo" property="exScPhoto"/>
+
+<result jdbcType="VARCHAR" column="delete_status" property="deleteStatus"/>
+
+</resultMap>
+
+<!-- SQL : INSERT DIET_SC -->
+
+
+
+<insert id="addExSchedule" keyProperty="exScNo" useGeneratedKeys="true" parameterType="com.wthealth.domain.ExSchedule">
+INSERT INTO ex_sc( ex_sc_no , user_id , ex_sc_title ,ex_sc_contents, ex_sc_calorie, ex_sc_date, ex_sc_time, post_no, ex_sc_photo, delete_status)VALUES ( seq_ex_sc_ex_sc_no.NEXTVAL , #{userId:VARCHAR} , #{exScName:VARCHAR}, #{exScContents:VARCHAR}, #{exScCalorie:NUMERIC} , 
+		       TO_DATE(#{exScDate}, 'YY-MM-DD'), TO_DATE(#{exScTime:VARCHAR},'hh:mi:ss'), 
+<if test="postNo==0">null</if>
+
+<if test="postNo!=0">#{postNo}</if>
+,#{exScPhoto:VARCHAR},'0' ) 
+<selectKey keyProperty="exScNo" order="AFTER" resultType="int">SELECT seq_ex_sc_ex_sc_no.currval FROM dual </selectKey>
+
+</insert>
+
+<!-- SQL : INSERT DIET_SC -->
+
+
+<insert id="addPostExSchedule" parameterType="com.wthealth.domain.ExSchedule">
+INSERT 
+INTO ex_sc(ex_sc_no, user_id, ex_sc_title, ex_sc_contents, ex_sc_calorie, ex_sc_date, ex_sc_time, 
+		  post_no, ex_sc_photo, delete_status)
+VALUES (seq_ex_sc_ex_sc_no.NEXTVAL , #{userId}, #{exScName}, #{exScContents:VARCHAR}, 
+		#{exScCalorie}, TO_DATE(#{exScDate}, 'YY-MM-DD'), TO_DATE(#{exScTime:VARCHAR},'hh:mi:ss'), #{postNo}, #{exScPhoto:VARCHAR}, '0') </insert>
+<!-- 	SQL : INSERT DIET_SC 
+	<insert 	id="addPostExSchedule"	parameterType="com.wthealth.domain.ExSchedule" >
+	 	INSERT
+		INTO ex_sc(ex_sc_no, user_id, ex_sc_title, ex_sc_contents, ex_sc_calorie, ex_sc_date, ex_sc_time, post_no, ex_sc_photo, delete_status) 
+		VALUES	 (seq_ex_sc_ex_sc_no.NEXTVAL , #{userId}, #{exScName}, #{exScContents}, #{exScCalorie} , #{exScDate}, 
+				#{exScTime:VARCHAR}, #{postNo}, #{exScPhoto:VARCHAR}, '0')	
+	</insert>
+	 -->
+	 
+	 <!-- SQL : SELECT  -->
+	 <select 	id="getExSchedule"	 parameterType="int"	 resultMap="exScSelectMap">
+		SELECT
+		ex_sc_no,ex_sc_title, user_id, ex_sc_contents, ex_sc_calorie, ex_sc_time, post_no, ex_sc_date, delete_status,ex_sc_photo
+		FROM ex_sc
+		WHERE ex_Sc_no= #{exScNo}
+	 </select>
+	 
+	 <!-- SQL : UPDATE -->
+	 <update	id="updateExSchedule"	parameterType="com.wthealth.domain.ExSchedule" >
+	   	Update ex_sc 
+			<set>
+				 ex_sc_title = #{exScName:VARCHAR}, 
+				 ex_sc_contents=#{exScContents:VARCHAR},
+				 ex_sc_time = #{exScTime:VARCHAR},
+				 ex_sc_calorie = #{exScCalorie:NUMERIC}
+			</set>
+			WHERE ex_sc_no= #{exScNo}
+	 </update>
+	 
+	  <update	id="deleteExSchedule"	parameterType="int" >
+	   	Update ex_sc 
+			<set>
+				delete_status = '1'
+			</set>
+			WHERE ex_sc_no= #{exScNo}
+	 </update>
+		 
+	<!-- SQL : SELECT LIST 도형이꺼봐야지 -->
+	<select  id="listExSchedule"  parameterType="java.lang.String" resultMap="exScSelectMap">
+	   SELECT *
+	   FROM ex_sc
+	   WHERE user_id = #{userId}
+	 </select>
+	 
+	 <select  id="getHistoryChart"  parameterType="java.lang.String" resultMap="exScSelectMap">
+	   SELECT *
+	   FROM ex_sc
+	   WHERE user_id = #{userId}
+	 </select>
+	 
+	 <select  id="getTotalCount"  parameterType="java.lang.String"	 resultType="int">
+	  	SELECT COUNT(*)
+	  	FROM(	SELECT * FROM ex_sc ) countTable			
+	 </select>
+
+
+		 	
+</mapper>
