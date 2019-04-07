@@ -18,6 +18,7 @@ public class LocationTagDaoImpl implements LocationTagDao {
 		this.sqlSession=sqlSession;
 	}	
 	
+	
 	//Constructor
 	public LocationTagDaoImpl() {
 		System.out.println(this.getClass());

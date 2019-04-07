@@ -68,14 +68,25 @@
 	  }); 
    });
    
+  
+	   
 
+	    
 
    var currentPage=1;
-
+   
+   $(function(){
+	   
+   
    $(window).scroll(function(){
 	  
-       if ($(window).scrollTop() == $(document).height() - $(window).height()) {
-      
+
+
+    	if ($(document).height() <= $(window).scrollTop() + $(window).height()+30 ) {   
+    		   
+    		   
+ 	         
+    	   
 		currentPage++;
 		
       $.ajax({
@@ -158,7 +169,7 @@
       }
    });
  
-   
+   });
   </script>
   
   

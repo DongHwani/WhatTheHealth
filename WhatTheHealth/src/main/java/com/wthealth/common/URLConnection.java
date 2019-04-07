@@ -81,14 +81,15 @@ public class URLConnection {
 				requestURL += "?" + param;
 			}
 			
-			System.out.println(requestURL);
 			
 			HttpURLConnection con = (HttpURLConnection)new URL(requestURL).openConnection();
 			 
+			
 			con.setRequestMethod(requestMethod);
 	        con.setDoOutput(true);
 	        con.setDoInput(true);
 	        con.setRequestProperty(propertyName, propertyValue);
+	
 	        if(propertyValue.contains("key=")) {
 	        	con.setRequestProperty("Accept", "application/json");
 	        }
@@ -110,7 +111,10 @@ public class URLConnection {
 	        
 	        if(con.getResponseCode() == 200) { 
 	            br = new BufferedReader(new InputStreamReader(con.getInputStream(), "UTF-8"));
+	        }else {
+	        	System.out.println(con.getResponseCode());
 	        }
+	        
 	        
 	        String jsonData = "";
 	        StringBuffer response = new StringBuffer();
@@ -131,7 +135,8 @@ public class URLConnection {
 		// parameter / contentType
 		public static JSONObject getJSON_PARAM(String requestMethod, String requestURL, String param, String contentType) throws Exception {
 			
-			if(requestMethod.equals("GET")) {
+		
+			if(requestMethod.equals("GET") && !(requestURL.contains("weather")) ){
 				requestURL += "?" + param;
 			}
 			
@@ -140,9 +145,11 @@ public class URLConnection {
 			con.setRequestMethod(requestMethod);
 			con.setDoOutput(true);
 			con.setDoInput(true);
+			
 			if(contentType != null) {
 				con.setRequestProperty("Content-Type", contentType);
 			}
+			
 			
 			if(requestMethod.equals("POST")) {
 				OutputStream os = con.getOutputStream();
@@ -170,6 +177,7 @@ public class URLConnection {
 			System.out.println(response.toString());
 			
 			JSONParser parser = new JSONParser();
+		
 			return (JSONObject)parser.parse(response.toString());
 		}
 		

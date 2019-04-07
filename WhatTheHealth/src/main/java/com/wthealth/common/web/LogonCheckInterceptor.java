@@ -8,17 +8,7 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import com.wthealth.domain.User;
 
-/*
- * FileName : LogonCheckInterceptor.java
- *  ㅇ Controller 호출전 interceptor 를 통해 선처리/후처리/완료처리를 수행
- *  	- preHandle() : Controller 호출전 선처리   
- * 			(true return ==> Controller 호출 / false return ==> Controller 미호출 ) 
- *  	- postHandle() : Controller 호출 후 후처리
- *    	- afterCompletion() : view 생성후 처리
- *    
- *    ==> 로그인한 회원이면 Controller 호출 : true return
- *    ==> 비 로그인한 회원이면 Controller 미 호출 : false return
- */
+
 public class LogonCheckInterceptor extends HandlerInterceptorAdapter {
 
 	///Field

@@ -80,8 +80,7 @@ public class ExInfoController {
 	
 	@RequestMapping(value="updateExInfo", method=RequestMethod.GET)
 	public String updateExInfo(@RequestParam("postNo") int postNo, Model model) throws Exception {
-
-		System.out.println(postNo);
+		
 		Post post = exInfoService.getExInfo(postNo);
 		
 		model.addAttribute("post", post);

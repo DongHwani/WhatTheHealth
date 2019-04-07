@@ -14,6 +14,7 @@ public class NutritionixAPI {
 	private final static String propertyName2 = "x-app-key";
 	private final static String propertyValu2 = "d5271826e137ee84e89875d1189d3264";
 	private final static String contentType = "application/json";
+	
 	private String body = "";
 	private JSONObject resultJSON = null; //api response json data
 	private JSONObject foodJSON = null; //food 모든 정보를 담은 json data
@@ -54,13 +55,12 @@ public class NutritionixAPI {
 	}
 	
 	public void setCalories(JSONArray altMeasures) {
+		 
 		  double nf_calories = Double.parseDouble(foodJSON.get("nf_calories").toString());
-		  System.out.println("nf_calories"+nf_calories);
+		 
           this.calories = Math.floor(nf_calories);
-          System.out.println("calories : "+calories);
           this.serving_weight_grames = Double.parseDouble(foodJSON.get("serving_weight_grams").toString());
          
-          System.out.println("serving_weight_grames : "+ serving_weight_grames);
 	}
 
 	public double getCalories() {

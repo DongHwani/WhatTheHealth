@@ -28,6 +28,8 @@ import com.wthealth.domain.User;
 import com.wthealth.service.dietschedule.DietScheduleService;
 import com.wthealth.service.user.UserService;
 
+import sun.security.util.Length;
+
 @RestController
 @RequestMapping("/calculator/*")
 public class CalculatorRestController {
@@ -36,36 +38,35 @@ public class CalculatorRestController {
 	@Autowired
 	@Qualifier("dietScheduleServiceImpl")
 	private DietScheduleService dietScheduleService;
+	
 	@Autowired
 	@Qualifier("userServiceImpl")
 	private UserService userService;	
+	
+	//Constructor
 	public CalculatorRestController() {
 		System.out.println(this.getClass());
 	}
 	
 	@RequestMapping(value="json/updateScheduleBMI", method=RequestMethod.POST)
-	public String updateScheduleBMI(@RequestBody BMI bmi, HttpSession session) throws Exception{
-		
+	public void updateScheduleBMI(@RequestBody BMI bmi, HttpSession session) throws Exception{
 		
 		dietScheduleService.addBmi(bmi);
-			
-		String successMessage = "스케줄에 저장이 완료되었습니다.";
-		return successMessage;
+	
 	}
 	
 	
 	@RequestMapping(value="json/getCalculationBMI", method=RequestMethod.POST)
 	public BMI getCalculationBMI(@RequestBody BMI bmi) throws Exception{
 		
-		BMI calBmi = new BMI(bmi.getHeight(), bmi.getWeight());
+		BMI calBmi = new BMI(bmi.getHeight(), bmi.getWeight());		
 		
 		return calBmi;
 	}
 	
 	@RequestMapping(value = "json/getSearchFood/{searchFood}", method=RequestMethod.GET)
 	public List<Food> getSearchFood(@PathVariable String searchFood) throws Exception{
-
-		System.out.println(searchFood);
+		
 		List<Food> foodInfo = new ArrayList<Food>();
 
 		//PapagoAPI Ko->En 변환 
@@ -75,6 +76,7 @@ public class CalculatorRestController {
         NutritionixAPI nutrition = new NutritionixAPI(translate.getResultTranslate());
    
         JSONObject result = nutrition.getResultJSON();
+        
         //api로부터 받은 JSON 데이터 가공 
         nutrition.setJSONdata(result);     
         JSONArray altMeasures = nutrition.getAltMeasures();
@@ -83,8 +85,9 @@ public class CalculatorRestController {
         nutrition.setCalories(altMeasures);
         
         double weightGrames = nutrition.getServing_weight_grames();
-        System.out.println(weightGrames);
+      
         for(int i=0;i<altMeasures.size();i++){
+        	
         	Food food = new Food();
         	
         	String amountFood = (String)((JSONObject)altMeasures.get(i)).get("measure");
@@ -94,8 +97,6 @@ public class CalculatorRestController {
         	String[] temp =(Double.toString(Math.floor((serving_weight/weightGrames)*nutrition.getCalories()))).split("\\.");
         	String calorie = temp[0];
         	
-/*        	param = "source=en&target=ko&text=" + URLEncoder.encode(amountFood,"UTF-8");
-    		translate = new PapaGo(param);*/
     		food.setAmountFood(amountFood);
         	param = "source=en&target=ko&text=" + URLEncoder.encode(foodName,"UTF-8");
     		translate = new PapaGo(param);
@@ -107,7 +108,6 @@ public class CalculatorRestController {
 	        foodInfo.add(food);
 	        
         }
-        System.out.println(foodInfo.size());
         
 		return foodInfo;
 	}	
@@ -119,7 +119,6 @@ public class CalculatorRestController {
 	   dietSchedule.setUserId(userId);
 	   dietScheduleService.addDietSchedule(dietSchedule);
 	   
-	   System.out.println("dietScNo받아오나"+dietSchedule.getDietScNo());
 	   
 
 	    for (int i = 0; i < dietSchedule.getFoodList().size(); i++) {

@@ -20,7 +20,7 @@ public interface RefundDao {
 
 	public List<Refund> listRefundAdmin(Search search) throws Exception;
 
-	// �Խ��� Page ó���� ���� ��üRow(totalCount) return
+	
 	public int getTotalCount(Search search, String userId) throws Exception;
 	
 	public int getTotalCountForAdmin(Search search) throws Exception;

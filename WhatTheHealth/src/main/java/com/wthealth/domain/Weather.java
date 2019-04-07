@@ -6,19 +6,10 @@ public class Weather {
 	private String cityName;
 	private double temperature;
 	private String currentWeather;
-	private String cityID;
 
 	//Constructor
-	public Weather() {
-	}
-
-	public String getCityID() {
-		return cityID;
-	}	
-
-	public void setCityID(String cityID) {
-		this.cityID = cityID;
-	}	
+	public Weather() {}
+	
 	
 	public String getCityName() {
 		return cityName;
@@ -26,7 +17,7 @@ public class Weather {
 
 
 	public void setCityName(String cityName) {
-		this.cityName = cityName;
+		this.cityName = cityName.replaceAll(" ", "");
 	}
 
 
@@ -46,14 +37,16 @@ public class Weather {
 
 
 	public void setCurrentWeather(String currentWeather) {
-		this.currentWeather = currentWeather;
+		this.currentWeather = currentWeather.replaceAll(" ", "");
 	}
+
 
 	@Override
 	public String toString() {
 		return "Weather [cityName=" + cityName + ", temperature=" + temperature + ", currentWeather=" + currentWeather
-				+ ", cityID=" + cityID + "]";
+				+ "]";
 	}
+
 
 
 	

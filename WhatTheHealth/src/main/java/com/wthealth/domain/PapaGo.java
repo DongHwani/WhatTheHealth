@@ -21,12 +21,16 @@ public class PapaGo {
 	
 	public PapaGo(String param) throws Exception {
 		
+		System.out.println(param);
+		
 		JSONObject json = URLConnection.getJSON_PARAMS(URLConnection.HTTPMETHOD_POST,  requestURL,  param,  contentType,
 				 propertyName,  propertyValue,  propertyName2,  propertyValue2);
 		
 		
 		JSONObject message =(JSONObject)json.get("message");
 		JSONObject result = (JSONObject)message.get("result");
+		
+		
 		this.resultTranslate = (String)result.get("translatedText");
 		
 	}

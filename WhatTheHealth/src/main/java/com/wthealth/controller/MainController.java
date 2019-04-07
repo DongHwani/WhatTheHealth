@@ -74,8 +74,6 @@ public class MainController {
       String mainCityName = "Seoul";
       Map<String, Object> weatherRecom = exInfoService.listWeatherRecom(mainCityName);
       
-
-	  
 	  model.addAttribute("weather", weatherRecom.get("weather"));
 	  model.addAttribute("weatherList", weatherRecom.get("weatherRecom"));
 	  model.addAttribute("weatherCode", weatherRecom.get("weatherCode"));

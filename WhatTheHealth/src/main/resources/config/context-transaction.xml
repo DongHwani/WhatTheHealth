@@ -1,63 +1,99 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<beans xmlns="http://www.springframework.org/schema/beans"
-		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-		xmlns:tx="http://www.springframework.org/schema/tx"
-		xmlns:aop="http://www.springframework.org/schema/aop"
-		xsi:schemaLocation=
-				"http://www.springframework.org/schema/beans 
-				 http://www.springframework.org/schema/beans/spring-beans.xsd
-				 http://www.springframework.org/schema/tx 
-				 http://www.springframework.org/schema/tx/spring-tx.xsd
-				 http://www.springframework.org/schema/aop 
-				 http://www.springframework.org/schema/aop/spring-aop.xsd">
-				 
-	<!-- PropertyPlaceholderConfigurer 로 로드된 resource 는 ${  } 로 접근 가능 -->
-	<bean	id="propertyConfigurer"
-				class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-		<property name="location" value="classpath:config/jdbc.properties" />
-	</bean>
+<beans xsi:schemaLocation="http://www.springframework.org/schema/beans 
+http://www.springframework.org/schema/beans/spring-beans.xsd 
+http://www.springframework.org/schema/tx 
+http://www.springframework.org/schema/tx/spring-tx.xsd 
+http://www.springframework.org/schema/aop 
+http://www.springframework.org/schema/aop/spring-aop.xsd" 
+xmlns:aop="http://www.springframework.org/schema/aop" 
+xmlns:tx="http://www.springframework.org/schema/tx" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+xmlns="http://www.springframework.org/schema/beans">
 
-	<!-- DBCP (Apache Commons Database Connection) 사용 -->
-	<bean id="dataSource"	
-				class="org.apache.commons.dbcp.BasicDataSource" >
-		<property name="driverClassName" value="${jdbc.driverClassName}" />
-        <property name="url" value="${jdbc.url}" />
-        <property name="username" value="${jdbc.username}"/>
-        <property name="password" value="${jdbc.password}"/>
-        <property name="initialSize" value="${jdbc.initialSize}"/>
-        <property name="maxActive" value="${jdbc.maxActive}"/>
-	</bean>				 
-												 
-	
-	<!-- TransactioManager instance 생성 -->
-	<bean id="transactionManager" 
-				class="org.springframework.jdbc.datasource.DataSourceTransactionManager" >
-		<property name="dataSource" ref="dataSource"/>
-	</bean>	
-	
-	<!-- Transaction Advice 생성 
-			:: method : transaction 적용 Method
-			:: propagation : transaction 전파규칙(default : REQUIRED)
-			:: read-only : 트랜잭션이 읽기만가능 (선택)-->
-	<tx:advice id="txAdvice" transaction-manager="transactionManager">
-		<tx:attributes>
-			<!-- get 으로 시작된는 Method에 적용 transaction 규칙 -->				
-			<tx:method 	name="get*" 			propagation="REQUIRED"	read-only="true" />
-			<tx:method 	name="list*" 			propagation="REQUIRED"	read-only="true" />
-			<!-- add 으로 시작된는 Method에 적용 transaction 규칙 -->		
-			<tx:method	name="add*"	 		propagation="REQUIRED"/>
-			<tx:method	name="update*"	propagation="REQUIRED"/>
-			<!--모든 Method에 적용 transaction 규칙 -->		
-			<!-- <tx:method	name="*"	 />-->	
-		</tx:attributes>
-	</tx:advice>
+<!-- PropertyPlaceholderConfigurer 로 로드된 resource 는 ${ } 로 접근 가능 -->
 
-	<!-- AOP : pointcut / advisor 설정 -->
-	<aop:config>
-		<aop:pointcut 	id="requiredTx"
-									expression="execution(* com.wthealth.service..*ServiceImpl.*(..) )" />
-		<aop:advisor 	advice-ref="txAdvice"  pointcut-ref="requiredTx"  />
-	</aop:config>
+
+
+<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer" id="propertyConfigurer">
+
+<property value="classpath:config/jdbc.properties" name="location"/>
+
+</bean>
+
+<!-- DBCP (Apache Commons Database Connection) 사용 -->
+
+
+
+<bean class="org.apache.commons.dbcp.BasicDataSource" id="dataSource">
+
+<property value="${jdbc.driverClassName}" name="driverClassName"/>
+
+<property value="${jdbc.url}" name="url"/>
+
+<property value="${jdbc.username}" name="username"/>
+
+<property value="${jdbc.password}" name="password"/>
+
+<property value="${jdbc.initialSize}" name="initialSize"/>
+
+<property value="${jdbc.maxActive}" name="maxActive"/>
+
+</bean>
+
+<!-- TransactioManager instance 생성 -->
+
+
+
+<bean class="org.springframework.jdbc.datasource.DataSourceTransactionManager" id="transactionManager">
+
+<property name="dataSource" ref="dataSource"/>
+
+</bean>
+
+<!-- Transaction Advice 생성 :: method : transaction 적용 Method:: propagation : transaction 전파규칙(default : REQUIRED):: read-only : 트랜잭션이 읽기만가능 (선택)-->
+
+
+
+<tx:advice id="txAdvice" transaction-manager="transactionManager">
+
+
+<tx:attributes>
+
+<!-- get 으로 시작된는 Method에 적용 transaction 규칙 -->
+
+
+<tx:method name="get*" read-only="true" propagation="REQUIRED"/>
+
+<tx:method name="list*" read-only="true" propagation="REQUIRED"/>
+
+<!-- add 으로 시작된는 Method에 적용 transaction 규칙 -->
+
+
+<tx:method name="add*" propagation="REQUIRED"/>
+
+<tx:method name="update*" propagation="REQUIRED"/>
+
+<!--모든 Method에 적용 transaction 규칙 -->
+
+
+<!-- <tx:method name="*" />-->
+
+
+</tx:attributes>
+
+</tx:advice>
+
+<!-- AOP : pointcut / advisor 설정 -->
+
+
+
+<aop:config>
+
+<aop:pointcut id="requiredTx" expression="execution(* com.wthealth.service..*ServiceImpl.*(..) )"/>
+
+<aop:advisor pointcut-ref="requiredTx" advice-ref="txAdvice"/>
+
+</aop:config>
 
 </beans>

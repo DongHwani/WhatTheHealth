@@ -8,6 +8,7 @@
 	
 <head>
 
+	<meta charset="UTF-8">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -69,8 +70,8 @@
 				  
 					  }, // end of header
 				  
-					  success : function(data, status){
-						alert(data)
+					  success : function(data){
+						
 					 	var totalDisplay = "";
 						$("#appendFood").children("tbody").children("tr").remove();
 						

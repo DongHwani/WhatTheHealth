@@ -28,6 +28,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.github.scribejava.core.model.OAuth2AccessToken;
+import com.wthealth.common.JsonStringParse;
 import com.wthealth.domain.Chatting;
 import com.wthealth.domain.NaverLogin;
 import com.wthealth.domain.User;
@@ -42,9 +43,7 @@ public class UserController {
 	@Autowired
 	@Qualifier("userServiceImpl")
 	private UserService userService;
-	//setter Method 구현 않음
 	
-	///Field
 	@Autowired
 	@Qualifier("chattingServiceImpl")
 	private ChattingService chattingService;

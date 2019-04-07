@@ -828,7 +828,7 @@ function changeCalorie(foodName){
    
    //realFoodName 생성
    var temp = foodName+""
-  var fn = temp.split("/")
+   var fn = temp.split("/")
    var realFoodName = fn[1];
    //totalcalorie
    var totalCalorie = 0;
@@ -1067,16 +1067,16 @@ $(function() {
                       
                          }, // end of header
                       
-                         success : function(data, status){
+                         success : function(data){
                             
-                    
+                      
                           foodName = data[0].foodName;//api에서 가져온 음식명  
                
               
                           var foodNameTag = '<div class="row" name="calStandard" style="height:15%;">';
-                             foodNameTag += '<div class="col-md-2">';
-                             foodNameTag   += '<div style="margin-top:12px;"><strong name="foodName">'+foodName+'</strong></div>';
-                             foodNameTag += '</div>';
+                              foodNameTag += '<div class="col-md-2">';
+                              foodNameTag   += '<div style="margin-top:12px;"><strong name="foodName">'+foodName+'</strong></div>';
+                              foodNameTag += '</div>';
                              
                           var firstCalorieTag = '<div class="col-md-2" style="margin-top:12px;">';      
                              
@@ -1121,6 +1121,8 @@ $(function() {
                           }else{
                            $('#dietCalorie').text($('span[name="foodCalorie'+foodName+'"]').text())                       
                           }
+                          
+                 
                       }//end of success
                     
                     }); // end of ajax

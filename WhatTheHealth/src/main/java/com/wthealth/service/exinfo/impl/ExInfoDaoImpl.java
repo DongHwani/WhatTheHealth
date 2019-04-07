@@ -50,10 +50,7 @@ public class ExInfoDaoImpl implements ExInfoDao{
       return sqlSession.selectList("ExInfoMapper.listExInfoPost", search);
    }
 
-   //@Override
-   public List<Post> listExInfo(String Weather) throws Exception {
-      return sqlSession.selectList("ExInfoMapper.listExInfoPost", Weather);
-   }
+   
    @Override
    public int getTotalCount(Search search) throws Exception{
       return sqlSession.selectOne("ExInfoMapper.getTotalCount", search);
