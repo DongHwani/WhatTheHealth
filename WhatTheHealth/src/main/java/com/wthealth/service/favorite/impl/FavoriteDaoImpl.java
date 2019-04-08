@@ -11,7 +11,6 @@ import org.springframework.stereotype.Repository;
 
 import com.wthealth.common.Search;
 import com.wthealth.domain.Favorite;
-import com.wthealth.domain.Post;
 import com.wthealth.domain.User;
 import com.wthealth.service.favorite.FavoriteDao;
 

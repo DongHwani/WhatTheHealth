@@ -10,8 +10,6 @@ import org.springframework.stereotype.Service;
 
 import com.wthealth.common.Search;
 import com.wthealth.domain.Favorite;
-import com.wthealth.domain.Post;
-import com.wthealth.domain.Refund;
 import com.wthealth.domain.User;
 import com.wthealth.service.favorite.FavoriteDao;
 import com.wthealth.service.favorite.FavoriteService;
