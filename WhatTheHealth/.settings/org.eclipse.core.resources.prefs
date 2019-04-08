@@ -9,3 +9,4 @@ encoding//src/main/java/com/wthealth/controller/ScheduleRestController.java=UTF-
 encoding//src/main/java/com/wthealth/service/main/impl/MainServiceImpl.java=UTF-8
 encoding//src/main/java/com/wthealth/service/refund/impl/RefundServiceImpl.java=UTF-8
 encoding//src/test/java/com/wthealth/service/exinfo/test/ExInfoTest.java=UTF-8
+encoding//src/test/java/com/wthealth/service/meeting/test/MeetingServiceTest.java=UTF-8
